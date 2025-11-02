@@ -3,19 +3,17 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
 
-// https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  server: {
-    host: "::",
-    port: 8080,
-    open: true,
-    // ✅ Fix for "localhost:8080 404" when using React Router
-    historyApiFallback: true,
-  },
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
+  },
+  base: "/", // ✅ Important for Vercel
+  server: {
+    host: "::",
+    port: 8080,
+    open: true,
   },
 }));
